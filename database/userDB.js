@@ -3,14 +3,18 @@ import { randomUUID } from "crypto";
 export class UserDB {
     #users = new Map()
 
-    create(user) {
-        const userId = randomUUID()
-
-        this.#users.set(userId, user)
+    getUser(id) {
+        return this.#users.get(id)
     }
 
-    update(id, user) {
-        this.#users.set(id, user)
+    create(user, role) {
+        const userId = randomUUID()
+
+        this.#users.set(userId, {user, role})
+    }
+
+    update(id, user, role) {
+        this.#users.set(id, {user, role})
     }
 
     delete(id, user) {

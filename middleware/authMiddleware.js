@@ -22,17 +22,28 @@ export function authRole(role) {
 }
 
 export function setUser(req, res, next) {
-    const userId = req.body
+    const userId = req.body.userId
+
     if(userId) {
-        req.user = UserDB.#users.get(userId)
+        const userData = UserDB.getUser(userId)
+
+        if(!userData) {
+            return res.status(404).send('User not found')
+        }
+
+        req.user = userData.user
+        req.userRole = userData.role
     }
+
+    next()
 }
 
 export function setProject(req, res, next) {
-    const roomId = parseInt(req.params)
-    req.room = RoomDB.#room.get(roomId)
+    const roomId = parseInt(req.params.roomId)
 
-    if(req.room === null || req.room === undefined) {
+    req.room = RoomDB.getRoomById(roomId)
+
+    if(!req.room) {
         return res.status(404).send('Project not found')
     }
 

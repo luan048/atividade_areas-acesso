@@ -2,8 +2,8 @@ export class RoomDB {
     #room = new Map()
     #idCounter = 1
 
-    list(id) {
-        return this.#room.find((user) => user.id === id)
+    getRoomById(id) {
+        return this.#room.get(id)
     }
 
     create(room) {
