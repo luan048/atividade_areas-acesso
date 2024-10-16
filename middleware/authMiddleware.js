@@ -1,5 +1,7 @@
 import {RoomDB} from '../database/roomDB.js'
-import {UserDB} from '../database/userDB.js'
+import {userDB} from '../database/userDB.js'
+
+const roomDB = new RoomDB()
 
 import {canViewProject} from '../permissions/viewRoom.js'
 
@@ -24,10 +26,13 @@ export function authRole(role) {
 export function setUser(req, res, next) {
     const userId = req.body.userId
 
-    if(userId) {
-        const userData = UserDB.getUser(userId)
+    if (userId) {
+        //PARA TESTE
+        console.log('Current users: ', userDB.debugUsers())
+        
+        const userData = userDB.getUser(userId)
 
-        if(!userData) {
+        if (!userData) {
             return res.status(404).send('User not found')
         }
 
@@ -41,7 +46,7 @@ export function setUser(req, res, next) {
 export function setProject(req, res, next) {
     const roomId = parseInt(req.params.roomId)
 
-    req.room = RoomDB.getRoomById(roomId)
+    req.room = roomDB.getRoomById(roomId)
 
     if(!req.room) {
         return res.status(404).send('Project not found')

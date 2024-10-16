@@ -7,6 +7,18 @@ export class UserDB {
         return this.#users.get(id)
     }
 
+    list() {
+        return Array.from(this.#users.entries()).map((userArray) => {
+            const id = userArray[0]
+            const data = userArray[1]
+
+            return {
+                id,
+                ...data,
+            }
+        })
+    }
+
     create(user, role) {
         const userId = randomUUID()
 
@@ -20,4 +32,12 @@ export class UserDB {
     delete(id, user) {
         this.#users.delete(id)
     }
+
+    //PARA TESTE
+    debugUsers() {
+        return Array.from(this.#users.entries())
+    }
 }
+
+// Criei uma intância, para quando criar o ROOM, utilizar da mesma intância para conseguir pegar os usuário
+export const userDB = new UserDB
