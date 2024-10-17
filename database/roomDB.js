@@ -10,6 +10,7 @@ export class RoomDB {
         const roomId = this.#idCounter++
 
         this.#room.set(roomId, room)
+        return roomId
     }
 
     update(id, room) {

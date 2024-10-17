@@ -27,8 +27,6 @@ export function setUser(req, res, next) {
     const userId = req.body.userId
 
     if (userId) {
-        //PARA TESTE
-        console.log('Current users: ', userDB.debugUsers())
         
         const userData = userDB.getUser(userId)
 
@@ -44,7 +42,7 @@ export function setUser(req, res, next) {
 }
 
 export function setProject(req, res, next) {
-    const roomId = parseInt(req.params.roomId)
+    const roomId = req.params.roomId
 
     req.room = roomDB.getRoomById(roomId)
 

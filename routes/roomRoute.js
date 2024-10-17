@@ -18,8 +18,8 @@ routerRoom.post('/createRoom', authUser, (req, res) => {
         userId: req.user.id,
     }
 
-    dbRoom.create(room)
-    return res.status(201).send('Created Sucessfully')
+    const roomId = dbRoom.create(room)
+    return res.status(201).json({message: 'Created Sucessfully', roomId})
 })
 
 export default routerRoom
