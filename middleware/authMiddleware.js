@@ -1,9 +1,8 @@
-import {RoomDB} from '../database/roomDB.js'
-import {userDB} from '../database/userDB.js'
+import { RoomDB } from '../database/roomDB.js'
+import { userDB } from '../database/userDB.js'
+import { canViewProject } from '../permissions/viewRoom.js'
 
 const roomDB = new RoomDB()
-
-import {canViewProject} from '../permissions/viewRoom.js'
 
 export function authUser(req, res, next) {
     if(req.user === null || req.user === undefined) {
@@ -15,7 +14,7 @@ export function authUser(req, res, next) {
 
 export function authRole(role) {
     return (req, res, next) => {
-        if(!role.includes(req.user)) {
+        if(!role.includes(req.user.role)) { 
             return res.status(401).send('Not allowed')
         }
 
@@ -27,7 +26,6 @@ export function setUser(req, res, next) {
     const userId = req.body.userId
 
     if (userId) {
-        
         const userData = userDB.getUser(userId)
 
         if (!userData) {
@@ -42,7 +40,11 @@ export function setUser(req, res, next) {
 }
 
 export function setProject(req, res, next) {
-    const roomId = req.params.roomId
+    const roomId = parseInt(req.params.roomId, 10)
+
+    if (isNaN(roomId)) {
+        return res.status(400).send('Invalid room ID format')
+    }
 
     req.room = roomDB.getRoomById(roomId)
 
@@ -60,3 +62,6 @@ export function authGetRoom(req, res, next) {
 
     next()
 }
+
+// Para usar a mesma instância em outra parte do código
+export default roomDB
