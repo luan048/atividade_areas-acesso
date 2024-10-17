@@ -1,7 +1,5 @@
 export function canViewProject(user, room) {
-    return (
-        user.role === admin || room.userId === user.id
-    )
+    return user.role === 'Admin' || user.role === room.role
 }
 
 export function scopedProject(user, room) {

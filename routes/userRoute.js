@@ -17,9 +17,9 @@ routerUser.post('/createUser', (req, res) => {
         role,
     }
 
-    userDB.create(user)
+    const userId = userDB.create(user, role)
 
-    return res.status(201).send('Created Sucessfully')
+    return res.status(201).json({message: 'Created Sucessfully', userId})
 })
 
 routerUser.put('/upUser/:id', (req, res) => {

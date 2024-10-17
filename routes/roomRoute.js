@@ -4,7 +4,7 @@ import roomDB from "../middleware/authMiddleware.js";
 
 const routerRoom = Router()
 
-routerRoom.get('/:roomId', setUser, authUser, setProject, authGetRoom, (req, res) => {
+routerRoom.get('/:roomId', setUser, setProject, authGetRoom, (req, res) => {
     res.json(req.room)
 })
 
@@ -14,6 +14,7 @@ routerRoom.post('/createRoom', setUser, authUser, (req, res) => {
     const room = {
         name,
         userId: req.user.id,
+        role: req.user.role,
     }
 
     const roomId = roomDB.create(room)
