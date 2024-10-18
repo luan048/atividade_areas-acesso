@@ -10,11 +10,11 @@ export class UserDB {
     list() {
         return Array.from(this.#users.entries()).map((userArray) => {
             const id = userArray[0]
-            const data = userArray[1]
+            const {user} = userArray[1]
 
             return {
                 id,
-                ...data,
+                ...user,
             }
         })
     }
@@ -31,11 +31,6 @@ export class UserDB {
 
     delete(id, user) {
         this.#users.delete(id)
-    }
-
-    //PARA TESTE
-    debugUsers() {
-        return Array.from(this.#users.entries())
     }
 }
 

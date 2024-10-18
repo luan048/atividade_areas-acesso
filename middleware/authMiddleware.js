@@ -23,12 +23,10 @@ export function authRole(role) {
 }
 
 export function setUser(req, res, next) {
-    console.log('Request body: ', req.body)
     const userId = req.body.userId
 
     if (userId) {
         const userData = userDB.getUser(userId)
-        console.log('This is the USERDATA: ', userData)
 
         if (!userData) {
             return res.status(404).send('User not found')
@@ -36,8 +34,6 @@ export function setUser(req, res, next) {
 
         req.user = userData.user
         req.userRole = userData.user.role || 'Guest'
-
-        console.log('USER ROLE: ', req.user.role)
     }
 
     next()
@@ -62,9 +58,6 @@ export function setProject(req, res, next) {
 }
 
 export function authGetRoom(req, res, next) {
-    console.log("User Role: ", req.user.role)
-    console.log("Room Role: ", req.room.role)
-
     if(!canViewProject(req.user, req.room)) {
         return res.status(401).send("You don't have access to this room")
     }

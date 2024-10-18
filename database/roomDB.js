@@ -1,14 +1,11 @@
 export class RoomDB {
     #room = new Map()
-    #idCounter = 1
 
     getRoomById(id) {
         return this.#room.get(id)
     }
 
-    create(room) {
-        const roomId = this.#idCounter++
-
+    create(roomId, room) {
         this.#room.set(roomId, room)
         return roomId
     }
